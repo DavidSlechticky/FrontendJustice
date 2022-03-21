@@ -1,0 +1,42 @@
+include: 
+  - project: atos-ci-cd-templates/templates
+    file: redeploy-k8s.yml
+    ref: master
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375/
+  TEST_IMAGE: $CI_REGISTRY_IMAGE:latest
+
+stages:
+  - build
+  - package
+  - deploy
+
+maven-build:
+  image: maven:3-jdk-8
+  stage: build
+  tags:
+    - docker
+  script:
+    - mvn package
+  artifacts:
+    paths:
+      - target/*.jar
+     
+docker-build:
+  image: docker:20.10
+  services:
+    - docker:dind
+  stage: package
+  tags:
+    - docker
+  script:
+  - docker build -t $TEST_IMAGE .
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  - docker push $TEST_IMAGE
+
+deploy-k8s:
+  extends: .redeploy-k8s
+  stage: deploy
+  when: manual

@@ -1,0 +1,367 @@
+
+/* Hlavni oblast html stranky */
+.container {
+    padding: 20px 0;
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.container-vstupy {
+    padding: 20px 0;
+    max-width: 800px;
+    min-height: 800px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.containerlogy {
+    padding: 20px;
+    max-width: 1250px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+/* pro pruhledny footer */
+html, body {
+    background: #ffffff;
+    font-family: 'Roboto';
+}
+
+/* Styl prihlaseneho uzivatele vpravo header */
+.user-info {
+    color:#FFFFFF;
+    text-align: right;
+    margin-right: 30px;
+}
+
+/* stylovani stranky sluzby.html texty */
+.more {
+    outline: none;
+    display:block;
+    width: 37%;
+    padding: 26px 0;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    background-color: #fff;
+    background-repeat: repeat-x;
+    background-position: left top;
+    font-size: 14px;
+    height: 80px;
+    line-height: 1.5em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: -16px;
+    margin-left: 15px;
+}
+
+.more:hover {
+    border: 1px solid #bbb;
+    text-decoration: none;
+    background-position: left -78px;
+    background-color: #2362a2;
+    color: white;
+}
+
+.more:active {
+    color: #666;
+    background-position: left -38px;
+}
+
+.round {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.list {
+    float: left;
+}
+
+
+/* stylovani stranky sluzby.html checkboxy */
+.morec {
+    outline: none;
+    display:block;
+    width: 11%;
+    padding: 0px 0;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    background-repeat: repeat-x;
+    background-position: left top;
+    font-size: 14px;
+    font-weight: bold;
+    height: 80px;
+    line-height: 1.5em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 0px;
+    margin-left: 12px;
+}
+
+.morec:hover {
+    border: 1px solid #bbb;
+    text-decoration: none;
+    background-position: left -78px;
+    background-color: #2362a2;
+}
+
+.morec:active {
+    color: #2362a2	;
+    background-position: left -38px;
+}
+
+.roundc {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.listc {
+    float: left;
+}
+
+/* vysledek ok na resultPage */
+.card p {
+    text-align: center;
+    color: #404F5E;
+    font-size:20px;
+    margin: 0;
+}
+.card i{
+    text-align: center;
+    color: #9ABC66;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left:-15px;
+}
+.card {
+    text-align: center;
+    background: white;
+    padding: 60px;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px #C8D0D8;
+    display: inline-block;
+    margin-left:125px;
+}
+
+/* formatovani shrnuti.html */
+.texty-form-shrnuti {
+    display:block;
+    background: #2362a2;
+    color: white;
+    float: left;
+    width: 100%; /* Full width */
+    padding: 6px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    margin-right: 20px;
+
+    resize: none /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/*td {
+    border: 1px solid white;
+    text-align: left;
+    width: 40%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+tr {
+    border: 1px solid white;
+    text-align: left;
+    width: 40%;
+    margin-left: 20px;
+    margin-right: 20px;
+}*/
+
+/* špatně vyplněné pole vstupy.html */
+.alert-warning {
+    font-size: 10px;
+    text-align: left;
+    color: black;
+    padding-left: 10px;
+    background: #fd5353;
+}
+
+/* souhrn cyhb vstupy.html */
+.error {
+    font-size: 9px;
+    color: #ff6363;
+    background: #ff6363;
+
+}
+
+/* pro stránku login.html */
+.navigation input[type=text] {
+    all: revert;
+    display:block;
+    font-size: 1rem;
+    height: calc(1.5em + 0.75rem + 2px);
+    float: left;
+    width: 100%; /* Full width */
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    font-family: inherit;
+    resize: none
+}
+
+/* strankovani logy */
+.pager-nav {
+    margin: 16px 0;
+    text-align: center;
+}
+
+.pager-nav p {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 1px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+}
+.pager-nav p:hover,
+.pager-nav .active {
+    background-color: #2362a2;
+    color: white;
+}
+
+/* konfigurace zapati (footeru) */
+
+.fixed_footer {
+    width: 100%;
+    position:fixed;
+    text-align: center;
+    color: #fd5353;
+    bottom:0;
+    left:0;
+    right:0;
+    height:50px;
+    background-color: #383838;
+    z-index: -100;
+}
+.fixed_footer p{
+    margin-top:12px;
+    color: #ffffff;
+}
+
+/* vstupy levý sloupec */
+.texty-form {
+    display:block;
+    float: left;
+    font-size: 14px;
+    width: 40%; /* Full width */
+    padding: 6px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    margin-right: 20px;
+    margin-left: 70px;
+    resize: none /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* vstupy pravý sloupec input type="text"*/
+.vstupy input[type=text], select {
+    display:block;
+    float: left;
+    font-size: 13px;
+    background: #D1DFED;
+    width: 40%; /* Full width */
+    padding: 6px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    resize: none /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.vstupy input[type=number] {
+    display:block;
+    float: left;
+    font-size: 13px;
+    width: 40%; /* Full width */
+    padding: 4px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    resize: none /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.vstupy input[type=date] {
+    display:block;
+    float: left;
+    background: #D1DFED;
+    font-size: 13px;
+    width: 40%; /* Full width */
+    padding: 4px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    resize: none /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/*  LOADING SPINNER  */
+.loadingDiv-parent {
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: 999998;
+}
+
+.loadingDiv {
+    position: fixed;
+    text-align: center;
+    top: 40%;
+    left: 35%;
+    z-index: 999999;
+}
+
+.loadingDiv .loading-image {
+    display: block;
+    margin: 25px 75px;
+}
+/*  background for disabled input form field  */
+.these[disabled=disabled] {
+    color: black;
+    background: white;
+}
+
+/* strankovani reasons */
+.pagerreason-nav {
+    margin: 16px 0;
+    text-align: center;
+}
+.pagerreason-nav span {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 1px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+}
+
+.pagerreason-nav span:hover,
+.pagerreason-nav .pg-selected {
+    background-color: #2362a2;
+    color: #ffffff;
+}
+

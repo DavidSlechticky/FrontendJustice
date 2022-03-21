@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+
+
+    <body>
+        <script type="text/javascript" th:src="@{/css/scripts.min.js}"></script>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+                <h1>Vítejte v aplikaci Žádosti ČSSZ</h1>
+                <ul>
+                    <li>Tato služba slouží k získání údajů o pojištěnci.</li>
+                    <li>Žádostí budete postupně provedeni.</li>
+                    <li>Před odesláním žádosti budete moci vložené údaje změnit.</li>
+                    <li>Výsledkem bude službou vytvořený PDF formulář.</li>
+                    <li>Vyplněnění tohoto formuláře bude trvat zhruba 3 minuty.</li>
+                </ul>
+
+
+            <br>
+            <button class="gov-button gov-button--primary gov-button--large" onclick="location.href = '/sluzby'">Spustit službu</button>
+            <button type="button" onclick="location.href = '/test'" class="btn btn-primary">Test</button>
+            <br><br><br>
+            <blockquote th:if="${#httpServletRequest.remoteUser == null}">
+                K použití služby musíte být přihlášeni admin/JusticeAtos.
+            </blockquote>
+
+        </main>
+
+        <div th:insert="komponenty :: paticka"></div>
+    </body>
+</html>

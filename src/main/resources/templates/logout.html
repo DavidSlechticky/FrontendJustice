@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+        <link rel="stylesheet" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+        <main role="main" class="container">
+
+            <div class="text-center">
+                <br><br><br>
+                <form th:action="@{/logout}" method="post" style="max-width: 350px; margin: 0 auto;">
+
+                    <div th:if="${param.error}">
+                        <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+                    </div>
+
+                    <div th:if="${param.logout}">
+                        <p class="text-warning">Proběhlo odhlášení.</p>
+                    </div>
+
+                    <div class="border border-secondary p-3 rounded navigation">
+                        <p>[[${#httpServletRequest.remoteUser}]], chcete se odhlásit?</p>
+
+                        <br>
+                        <p>
+                            <input type="submit" value="Odhlásit" class="gov-button gov-button--primary" />
+                        </p>
+                    </div>
+                </form>      
+            </div>
+        </main>
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>
+
+

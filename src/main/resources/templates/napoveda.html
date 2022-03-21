@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+
+
+    <body>
+        <script type="text/javascript" th:src="@{/css/scripts.min.js}"></script>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+            <div class="gov-accordion gov-js-accordion">
+                <button id="gov-accordion-header-0" class="gov-accordion__header  gov-accordion__header--noborder" aria-expanded="false" aria-controls="gov-accordion-content-0">
+                    <h3>Lorem ipsum</h3>
+                </button>
+                <div class="gov-accordion__content" id="gov-accordion-content-0" aria-labelledby="gov-accordion-header-0">
+                    <div class="gov-accordion__content-inner">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula sollicitudin risus,
+                            quis tempor metus imperdiet vitae. Duis in blandit lacus.
+                        </p>
+                    </div>
+                </div>
+                <button id="gov-accordion-header-1" class="gov-accordion__header  " aria-expanded="false" aria-controls="gov-accordion-content-1">
+                    <h3>Adipiscing elit</h3>
+                </button>
+                <div class="gov-accordion__content" id="gov-accordion-content-1" aria-labelledby="gov-accordion-header-1">
+                    <div class="gov-accordion__content-inner">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula sollicitudin risus,
+                            quis tempor metus imperdiet vitae. Duis in blandit lacus.
+                        </p>
+                    </div>
+                </div>
+                <button id="gov-accordion-header-1" class="gov-accordion__header  " aria-expanded="false" aria-controls="gov-accordion-content-1">
+                    <h3>Praesent vehicula sollicitudin </h3>
+                </button>
+                <div class="gov-accordion__content" id="gov-accordion-content-1" aria-labelledby="gov-accordion-header-1">
+                    <div class="gov-accordion__content-inner">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula sollicitudin risus,
+                            quis tempor metus imperdiet vitae. Duis in blandit lacus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

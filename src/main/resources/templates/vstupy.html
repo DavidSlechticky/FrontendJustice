@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <script type="text/javascript" th:src="@{/css/scripts.min.js}"></script>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container-vstupy">
+
+            <H3 >2. Vyplňte informace:</H3>
+            <div class="vstupy">
+                <form action="#" th:action="@{/odeslatform}" th:object="${searchFormValidation}" method="post">
+                    <!--<div class="error" th:if="${#fields.hasAnyErrors()}"> Prosím opravte tyto vstupy:
+                        <ul>
+                            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                        </ul>
+                    </div>-->
+
+                    <div class="gov-alert gov-alert--error" th:if="${#fields.hasAnyErrors()}"> 
+                        <div class="gov-alert__content">
+                            <p th:each="err : ${#fields.allErrors()}" th:text="${err}" ></p>
+
+                        </div>
+                    </div>
+
+                    <div class="texty-form">Spisová značka:</div>
+                    <input type="text" id="znacka" th:field="*{znacka}" required />
+                    <!--<div class="error" th:if="${#fields.hasErrors('znacka')}" th:errors="*{znacka}"></div>   -->      
+
+                    <div class="texty-form">Soud:</div><input type="text" th:field="*{soud}" />
+                    <!--<div class="error" th:if="${#fields.hasErrors('soud')}" th:errors="*{soud}"></div>-->
+
+                    <div class="texty-form">Důvod:</div>
+                            <select style="font-size: 13px;" th:field="*{duvod}">
+                                    <option th:each="p : ${reasons}" th:value="${p.name}" th:text="${p.name}" th:field=="*{duvod}"/>
+                            </select>
+                    <!--<div class="alert-warning" th:if="${#fields.hasErrors('duvod')}" th:errors="*{duvod}"></div>      -->   
+
+                    <div class="texty-form">Uživatel:</div><input class="these" type="text" th:placeholder="${#httpServletRequest.remoteUser}" th:field="*{uzivatel}" disabled="disabled"/>
+                    <!--<div class="alert-warning" th:if="${#fields.hasErrors('uzivatel')}" th:errors="*{uzivatel}"></div>  -->       
+
+                    <!--<div class="texty-form">Datum dotazu</div><input type="date" th:field="*{datumDotazu}"/> --> 
+                    <!--<div class="alert-warning" th:if="${#fields.hasErrors('datumDotazu')}" th:errors="*{datumDotazu}"></div>-->
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'jmeno'}">Jméno:</div><input th:if="${value.camel == 'jmeno'}" type="text" th:field="*{jmeno}"/> 
+                        <!--<div class="error" th:if="${#fields.hasErrors('jmeno') and value.camel == 'jmeno'}" th:errors="*{jmeno}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'prijmeni'}">Příjmení:</div><input th:if="${value.camel == 'prijmeni'}" type="text" th:field="*{prijmeni}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('prijmeni') and value.camel == 'prijmeni'}" th:errors="*{prijmeni}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'rodnePrijmeni'}">Rodné příjmení:</div><input th:if="${value.camel == 'rodnePrijmeni'}" type="text" th:field="*{rodnePrijmeni}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('rodnePrijmeni') and value.camel == 'rodnePrijmeni'}" th:errors="*{rodnePrijmeni}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'rodneCislo'}">Rodné číslo:</div><input th:if="${value.camel == 'rodneCislo'}" type="text" th:field="*{rodneCislo}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('rodneCislo') and value.camel == 'rodneCislo'}" th:errors="*{rodneCislo}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">         
+                        <div class="texty-form" th:if="${value.camel == 'datumNarozeni'}">Datum narození:</div><input th:if="${value.camel == 'datumNarozeni'}" type="date" th:field="*{datumNarozeni}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('datumNarozeni') and value.camel == 'datumNarozeni'}" th:errors="*{datumNarozeni}"></div>-->
+                    </th:block>
+
+                    <!--<th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'druhDavky'}">Druh dávky</div><input th:if="${value.camel == 'druhDavky'}" type="number" th:field="*{druhDavky}"/> 
+                    <!--<div class="alert-warning" th:if="${#fields.hasErrors('druhDavky') and value.camel == 'druhDavky'}" th:errors="*{druhDavky}">
+                </th:block>-->
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'obdobiVypisuOd'}">Období výpisu od:</div><input th:if="${value.camel == 'obdobiVypisuOd'}" type="date" th:field="*{obdobiVypisuOd}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('obdobiVypisuOd') and value.camel == 'obdobiVypisuOd'}" th:errors="*{obdobiVypisuOd}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'obdobiVypisuDo'}">Období výpisu do:</div><input th:if="${value.camel == 'obdobiVypisuDo'}" type="date" th:field="*{obdobiVypisuDo}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('obdobiVypisuDo') and value.camel == 'obdobiVypisuDo'}" th:errors="*{obdobiVypisuDo}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'pouzeOtevreneVztahy'}">Pouze otevřené vztahy:</div>
+                                <select style="font-size: 13px;" th:if="${value.camel == 'pouzeOtevreneVztahy'}" th:field="*{pouzeOtevreneVztahy}">
+                                    <option value="ano">Ano</option>
+                            <option value="ne">Ne</option>
+                                </select>
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('pouzeOtevreneVztahy') and value.camel == 'pouzeOtevreneVztahy'}" th:errors="*{pouzeOtevreneVztahy}"></div> -->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">              
+                        <div class="texty-form" th:if="${value.camel == 'ico'}">IČO:</div><input th:if="${value.camel == 'ico'}" type="text" th:field="*{ico}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('ico') and value.camel == 'ico'}" th:errors="*{ico}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">
+                        <div class="texty-form" th:if="${value.camel == 'vs'}">VS:</div><input th:if="${value.camel == 'vs'}" type="text" th:field="*{vs}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('vs') and value.camel == 'vs'}" th:errors="*{vs}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">          
+                        <div class="texty-form" th:if="${value.camel == 'stat'}">Stát:</div><input th:if="${value.camel == 'stat'}" type="text" th:field="*{stat}"/> 
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('stat') and value.camel == 'stat'}" th:errors="*{stat}"></div>-->
+                    </th:block>
+
+                    <th:block th:each="value: ${formValues}">      
+                        <div class="texty-form" th:if="${value.camel == 'zobrazitCisloUctuAdresuVyplaceni'}">Zobrazit číslo účtu/adresu vyplacení:</div>
+                                <select style="font-size: 13px;" th:if="${value.camel == 'zobrazitCisloUctuAdresuVyplaceni'}" th:field="*{zobrazitCisloUctuAdresuVyplaceni}">
+                                    <option value="ano">Ano</option>
+                            <option value="ne">Ne</option>
+                                </select>
+                        <!--<div class="alert-warning" th:if="${#fields.hasErrors('zobrazitCisloUctuAdresuVyplaceni') and value.camel == 'zobrazitCisloUctuAdresuVyplaceni'}" th:errors="*{zobrazitCisloUctuAdresuVyplaceni}"></div>  -->
+                    </th:block>
+                    <button type="button" style="clear: left; float: left; margin-top: 10px;" onclick="location.href = '/sluzby'" class="gov-button">Zpět</button>
+                    <button type="submit" style="float: right; margin-top: 10px;" class="gov-button gov-button--primary">Pokračovat</button>
+
+                    <!--<p><input type="submit" value="Odeslat" /> <input type="reset" value="Vymazat" /></p>-->
+
+                </form>
+                <br><br><br><br><br><br>
+            </div>
+        </main>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

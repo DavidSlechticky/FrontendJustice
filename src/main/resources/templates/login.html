@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+        <link rel="stylesheet" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+        <main role="main" class="container">
+
+            <div class="text-center">
+                <br><br><br>
+                <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+
+                    <div th:if="${param.error}">
+                        <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+                    </div>
+
+                    <div th:if="${param.logout}">
+                        <p class="text-warning">Proběhlo odhlášení.</p>
+                    </div>
+
+                    <div class="border border-secondary p-3 rounded navigation">
+                        <p>Pro přístup do aplikace se přihlaste</p>
+                        <p>
+                            <input type="text" name="username" class="form-control" placeholder="Uživatelské jméno" required autofocus/>
+                        </p>
+                        <p>
+                            <input type="password" name="password" class="form-control" placeholder="Heslo" required />
+                        </p>
+                        <br>
+                        <p>
+                            <input type="submit" value="Přihlásit" class="gov-button gov-button--primary" />
+                        </p>
+                    </div>
+                </form>      
+            </div>
+        </main>    
+
+        <div class="loadingDiv-parent">
+            <div class="loadingDiv">
+                <div class="card border-success">
+                    <div class="card-header">
+                        <h3 class="panel-title">Probíhá zpracování, vyčkejte prosím.</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="sg-loaders__item">
+                            <div class="gov-loader">
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                            </div>
+                        </div>
+                        <span id="panelclose_btn"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(window).on('load', function () {
+                $(".loadingDiv-parent").fadeOut("fast");
+            });
+            $(window).on('beforeunload', function () {
+                $(".loadingDiv-parent").fadeIn(1);
+            });
+        </script>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

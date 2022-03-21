@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+            <H3 class="starter-template"><br>3. Kontrola informací</H3>
+
+            <div class="texty-form-shrnuti">Zvolené služby:</div>
+            <table>
+                <tr th:each="sluzba : ${vybraneSluzby}">
+                    <td th:text="${'&nbsp;' +'&nbsp;' +'&nbsp;' + sluzba}"></td>
+                </tr>
+            </table>
+            <div class="texty-form-shrnuti">Info o žádosti:</div>
+            <table>
+                <tr>
+                    <td style="width:40%">&nbsp;&nbsp;&nbsp;Spisová značka: </td><td th:text="${getPDFRequest.znacka}"></td>
+                </tr>
+                <tr>
+                    <td style="width:40%">&nbsp;&nbsp;&nbsp;Soud: </td><td th:text="${getPDFRequest.soud}"></td>
+                </tr>
+                <tr>
+                    <td style="width:40%">&nbsp;&nbsp;&nbsp;Uživatel: </td><td th:text="${getPDFRequest.uzivatel}"></td>
+                </tr>
+                <tr>
+                    <td style="width:40%">&nbsp;&nbsp;&nbsp;Důvod: </td><td th:text="${getPDFRequest.duvod}"></td>
+                </tr>
+                <tr>
+                    <td style="width:40%">&nbsp;&nbsp;&nbsp;Datum a čas dotazu: </td><td th:text="${#dates.format(getPDFRequest.datumDotazu, 'd. MM. yyyy, HH:MM')}"></td>
+                </tr>
+            </table>
+
+            <div class="texty-form-shrnuti">Vstupní parametry:</div>
+            <table>
+                <tr th:each="value : ${getPDFRequest.inputValues}">
+                    <td style="width:40%" th:text="${'&nbsp;' +'&nbsp;' +'&nbsp;' + value.friendly + ':'}"></td><td th:text="${value.value}"></td>
+                </tr>
+            </table>
+
+            <form action="#" th:action="@{/submit}"  method="post">
+
+                <button type="submit" style="float: right; margin-bottom: 20px;" class="gov-button gov-button--primary">Odeslat</button>
+                <button type="button" style="float: left; margin-bottom: 20px;" onclick="location.href = '/odeslatform'" class="gov-button">Opravit</button>
+
+            </form>
+            <br><br><br><br><br><br>
+
+        </main>
+
+        <div class="loadingDiv-parent">
+            <div class="loadingDiv">
+                <div class="card border-success">
+                    <div class="card-header">
+                        <h3 class="panel-title">Probíhá zpracování, vyčkejte prosím.</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="sg-loaders__item">
+                            <div class="gov-loader">
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                            </div>
+                        </div>
+                        <span id="panelclose_btn"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(window).on('load', function () {
+                $(".loadingDiv-parent").fadeOut("slow");
+            });
+            $(window).on('beforeunload', function () {
+                $(".loadingDiv-parent").fadeIn(50);
+            });
+        </script>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

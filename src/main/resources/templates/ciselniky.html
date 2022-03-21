@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <script type="text/javascript" th:src="@{/css/PagerJS.js}"></script>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+        <style>
+            table {
+                width: 100%;
+            }
+            th {
+                cursor: pointer;
+                font-weight: bold;
+            }
+            /* Style the submit button */
+            .form-inline button {
+                padding: 5px 20px;
+                background-color: dodgerblue;
+                border: 1px solid #ddd;
+                color: white;
+            }
+            .form-inline button:hover {
+                background-color: royalblue;
+            }            
+
+        </style>
+        <main role="main" class="container">
+
+            <blockquote th:if="${session.ciselnikZmenen != null}">
+                Požadavek byl uložen.
+                <div th:text="${@frontendRestController.removeVerificationMessageFromSession()}"></div>
+            </blockquote>
+            
+            <h2>Přehled důvodů žádosti</h2> 
+            <!--<form th:action="@{/reasonNewEdit}" method="post">
+                <button type="submit" style="float: right;" class="gov-button gov-button--primary">Vytvořit nový</button>
+            </form>-->
+
+            <div th:if="${ not#lists.isEmpty(reasonsVse)}">
+                <table  id="myTable">
+                    <tr>
+                        <th  onclick="sortTable(0)">Id</th>
+                        <th  onclick="sortTable(1)">Název</th>
+                        <th  onclick="sortTable(2)">Platný od</th>
+                        <th  onclick="sortTable(3)">Platný do</th>
+                        <th  onclick="sortTable(4)">Verze</th>
+                    </tr>
+                    <tr th:each="reason : ${reasonsVse}">
+                        <td class="gov-table__cell--narrow" th:text="${reason.id}"></td>
+                        <td class="gov-table__cell--wide" th:text="${reason.name}"></td>
+                        <td class="gov-table__cell--narrow" th:text="${#dates.format(reason.validfrom, 'd. MM. yyyy')}"></td>
+                        <td class="gov-table__cell--narrow" th:text="${#dates.format(reason.validto, 'd. MM. yyyy')}"></td>
+                        <td class="gov-table__cell--narrow" th:text="${reason.version}"></td>
+
+                        <td class="gov-table__cell--narrow">  
+                            <form th:action="@{/reasonUpdateEdit}" th:object="${duvodyForm}" method="post">
+                                <input type="hidden" name="id" th:value="${reason.id}">
+                                <input type="hidden" name="name" th:value="${reason.name}">
+                                <input type="hidden" name="validfrom" th:value="${#dates.format(reason.validfrom, 'yyyy-MM-dd')}">
+                                <input type="hidden" name="validto" th:value="${#dates.format(reason.validto, 'yyyy-MM-dd')}">
+                                <input type="hidden" name="version" th:value="${reason.version}">
+                                <button type="submit" class="gov-button gov-button--primary-outlined gov-button--small">Změnit</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="pageNavPosition" class="pagerreason-nav"></div>
+
+        </main>
+
+        <script>
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("myTable");
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+                 no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /*Loop through all table rows (except the
+                     first, which contains table headers):*/
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                         one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /*check if the two rows should switch place,
+                         based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                         and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                         set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            let pager = new Pager('myTable', 8);
+
+            pager.init();
+            pager.showPageNav('pager', 'pageNavPosition');
+            pager.showPage(1);
+        </script>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+        <script type="text/javascript" th:src="@{/css/PagerJS.js}"></script>
+
+        <style>
+            th {
+                cursor: pointer;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            /* Style the form - display items horizontally */
+            .form-inline {
+                display: flex;
+                flex-flow: row wrap;
+                align-items: center;
+            }
+
+            /* Add some margins for each label */
+            .form-inline label {
+                margin: 5px 10px 5px 0;
+            }
+
+            /* Style the input fields */
+            .form-inline input {
+                vertical-align: middle;
+                margin: 5px 10px 5px 0;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+            .form-inline select {
+                vertical-align: middle;
+                margin: 5px 10px 5px 0;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+            .complete{
+                display:none;
+            }
+
+            .eventdo {
+                margin-top: 4px;
+            }
+
+
+            .popup{
+                display: none;
+                border: 1px solid black;
+            }
+
+            .ui-dialog-titlebar{
+                background: black;
+            }
+            
+            .test {
+                width: 300px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                margin-bottom:0px;
+            }
+
+            tr:hoverx .test {
+                overflow: visible;
+                white-space: normal;
+            }
+
+            .spisova-znacka {
+                width: 100px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                margin-bottom:0px;
+            }
+
+            tr:hoverx .spisova-znacka {
+                overflow: visible;
+                white-space: normal;
+            }
+
+
+            .pagination p:hover{
+                cursor: pointer;
+            }
+
+
+        </style>
+
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css"/>
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+        <main role="main" class="containerlogy">
+
+            <H2>Auditní logy, zvolte parametry vyhledávání</H2>
+            <hr>
+            <form class="form-inline" action="#" th:action="@{/searchLog}" th:object="${logSearchForm}" method="post">
+
+                <!--<label>Uživatel:<input type="text" id="username" th:field="*{username}" /></label>-->
+                <div class="gov-form-control">
+                    <input class="gov-form-control__input gov-js-input" type="text" id="username" th:field="*{username}" aria-required="false" aria-disabled="false" />
+                    <span class="gov-form-control__message">Uživatel</span>
+                </div>
+
+                <!--<label>Oddělení:<input type="text" id="department" th:field="*{department}" /></label>-->
+
+                <!--<label>Typ logu:
+                            <select id="logtype" th:field="*{logtype}">
+                                <option value="">Vše</option>
+                        <option value="search">Dotazy ČSSZ</option>
+                        <option value="ciselnik">Změny číselníku</option>
+                            </select></label>-->
+                <div class="gov-form-control">
+                    <div class="gov-select gov-js-select">
+                        <select id="logtype" th:field="*{logtype}" aria-required="false" aria-disabled="false">
+                            <option value="">Vše</option>
+                            <option value="search">Dotazy ČSSZ</option>
+                            <option value="ciselnik">Změny číselníku</option>
+                        </select>
+                    </div>
+                    <span class="gov-form-control__message">Typ logu</span>
+                </div>
+
+                <!--<label>Spisová značka<input type="text" id="docsign" th:field="*{docsign}" /></label>-->
+                <div class="gov-form-control">
+                    <input class="gov-form-control__input gov-js-input" type="text" id="docsign" th:field="*{docsign}" aria-required="false" aria-disabled="false" />
+                    <span class="gov-form-control__message">Spisová značka</span>
+                </div>
+
+                <!--<label>Datum od:<input type="date" id="dtfrom" th:field="*{dtfrom}" /></label>-->
+                <div class="gov-form-control">
+                    <input class="gov-form-control__input gov-js-input" type="date" id="dtfrom" th:field="*{dtfrom}" aria-required="false" aria-disabled="false" />
+                    <span class="gov-form-control__message">Datum od</span>
+                </div>
+
+                <!--<label>Datum do:<input type="date" id="dtto" th:field="*{dtto}" /></label>-->
+                <div class="gov-form-control">
+                    <input class="gov-form-control__input gov-js-input" type="date" id="dtto" th:field="*{dtto}" aria-required="false" aria-disabled="false" />
+                    <span class="gov-form-control__message">Datum do</span>
+                </div>
+
+                <button type="submit" style="float: right; margin-left: 10px; margin-bottom: 20px;" class="gov-button gov-button--primary gov-button--large">Vyhledat</button>
+
+            </form>
+            <hr>
+
+            <div class="form-group">
+                <div class="form-control" value="10" name="state" id="maxRows"></div>
+            </div>
+            <div th:if="${ not#lists.isEmpty(logValues)}">
+
+
+                <table id="myTable">
+                    <tr>
+                        <th onclick="sortTable(0)">Uživatel</th>
+                        <th onclick="sortTable(1)">Oddělení</th>
+                        <th onclick="sortTable(2)">Spisová značka</th>
+                        <th onclick="sortTable(3)">Typ logu</th>
+                        <th onclick="sortTable(4)">Text logu</th>
+                        <th onclick="sortTable(5)">Datum vytvoření</th>
+                    </tr>
+                    <tr th:each="log : ${logValues}">
+                        <td class="spisova-znacka" style="font-size: 13px; width:100px" th:text="${log.username}"></td>
+                        <td class="spisova-znacka" style="font-size: 13px; width:150px" th:text="${log.department}"></td>
+                        
+                        <td th:title="${log.docsign}"><p class="spisova-znacka" style="font-size: 13px;" th:text="${log.docsign}"></p></td>
+                        
+                        <td style="font-size: 13px; width:100px" th:text="${log.logtype}"></td>
+                        <!--<td class="hide" style="width:600px;"><p class="test" style="font-size: 10px;" th:text="${#strings.abbreviate(log.logtext,130)} "></p></td>-->
+                        <td th:title="${log.logtext}" class="hide cell-which-triggers-popup" style="width:600px;"><p class="test" style="font-size: 10px;" th:text="${log.logtext}"></p></td>
+
+                        <!--<td class="complete" style="width:600px; font-size: 10px;" th:text="${log.logtext}"></td>-->
+                        <td style="font-size: 13px; width:200px" th:text="${#dates.format(log.timestamp, 'd. MM. yyyy HH:mm')}"></td>
+                        <td class="eventdo gov-button gov-button--primary-outlined gov-button--small">                                
+                            Detail
+                        </td>
+                </table>
+
+                <!--		Start Pagination -->
+                <div class='pager-nav'>
+                    <nav>
+                        <div style="list-style-type: none" class="pagination">
+
+                            <p data-page="prev">
+                                <span>
+                                    < </span>
+                            </p>
+                            <!--	Here the JS Function Will Add the Rows -->
+                            <p data-page="next" id="prev">
+                                <span> > </span></span>
+                            </p>
+                        </div>
+                    </nav>
+                </div>
+            
+            </div>
+
+            <div id="popup" data-name="name" class="dialog">
+                <p></p>            
+            </div>
+
+            <script>
+                /* $(".hide").click(function () {
+                 alert($(this).siblings(".complete").text());
+                 });*/
+            </script>
+            <script>
+                /*$(".vice").toggle(function () {
+                 $(this).text("Méně").siblings(".complete").show();
+                 $(".hide").hide();
+                 }, function () {
+                 $(this).text("Více").siblings(".complete").hide();
+                 $(".hide").show();
+                 });*/
+                $(".vice").click(function () {
+                    alert($(this).siblings(".complete").text());
+                });
+            </script>
+
+            <script>
+
+                $(".cell-which-triggers-popup").click(function (event) {
+                    var cell_value = $(this).text();
+                    var cell_value_1 = cell_value.replace("Volané služby:", "<b>Volané služby:</b><BR>");
+                    var cell_value_2 = cell_value_1.replace("Nalezené hodnoty:", "<BR><b>Nalezené hodnoty:</b><BR>");
+                    var cell_value_3 = cell_value_2.replace("Zmena ciselniku:", "<b>Zmena ciselniku:</b><BR>");
+                    var cell_value_4 = cell_value_3.replace("Novy ciselnik:", "<b>Novy ciselnik:</b><BR>");
+                    showPopup(cell_value_4)
+                });
+
+                $(".eventdo").click(function (event) {
+                    var cell_value = $(this).siblings(".hide").text();
+                    var cell_value_1 = cell_value.replace("Volané služby:", "<b>Volané služby:</b><BR>");
+                    var cell_value_2 = cell_value_1.replace("Nalezené hodnoty:", "<BR><b>Nalezené hodnoty:</b><BR>");
+                    var cell_value_3 = cell_value_2.replace("Zmena ciselniku:", "<b>Zmena ciselniku:</b><BR>");
+                    var cell_value_4 = cell_value_3.replace("Novy ciselnik:", "<b>Novy ciselnik:</b><BR>");
+                    showPopup(cell_value_4)
+                });
+
+
+                function showPopup(your_variable) {
+                    $("#popup").dialog({
+                        width: 800,
+                        height: 500,
+                        draggable: false,
+                        title: "Detail TEXT LOGU",
+                        modal: true,
+                        open: function () {
+                            $(this).find("p").html(your_variable)
+                        }
+                    });
+                }
+
+            </script>
+
+
+            <div id="pageNavPosition" class="pager-nav"></div>
+            <br>
+            <div class="loadingDiv-parent">
+                <div class="loadingDiv">
+                    <div class="card border-success">
+                        <div class="card-header">
+                            <h3 class="panel-title">Probíhá zpracování, vyčkejte prosím.</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="sg-loaders__item">
+                                <div class="gov-loader">
+                                    <span>&nbsp;</span>
+                                    <span>&nbsp;</span>
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <span id="panelclose_btn"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+
+        <script>
+            $(window).on('load', function () {
+                $(".loadingDiv-parent").fadeOut("slow");
+            });
+            $(window).on('beforeunload', function () {
+                $(".loadingDiv-parent").fadeIn(50);
+            });
+        </script>
+
+        <script>
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("myTable");
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+                 no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /*Loop through all table rows (except the
+                     first, which contains table headers):*/
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                         one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /*check if the two rows should switch place,
+                         based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                         and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                         set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        </script>
+        <!--https://getbutterfly.com/client-side-html-pagination-with-javascript/-->
+        <script>
+            getPagination('#myTable');
+
+            function getPagination(table) {
+                var lastPage = 1;
+
+                $('#maxRows')
+                        .on('change', function (evt) {
+                            //$('.paginationprev').html('');						// reset pagination
+
+                            lastPage = 1;
+                            $('.pagination')
+                                    .find('p')
+                                    .slice(1, -1)
+                                    .remove();
+                            var trnum = 0; // reset tr counter
+                            var maxRows = parseInt("10"); // get Max Rows from select option
+
+                            var totalRows = $(table + ' tbody tr').length; // numbers of rows
+                            $(table + ' tr:gt(0)').each(function () {
+                                // each TR in  table and not the header
+                                trnum++; // Start Counter
+                                if (trnum > maxRows) {
+                                    // if tr number gt maxRows
+
+                                    $(this).hide(); // fade it out
+                                }
+                                if (trnum <= maxRows) {
+                                    $(this).show();
+                                } // else fade in Important in case if it ..
+                            }); //  was fade out to fade it in
+                            if (totalRows > maxRows) {
+                                // if tr total rows gt max rows option
+                                var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+                                //	numbers of pages
+                                for (var i = 1; i <= pagenum; ) {
+                                    // for each page append pagination li
+                                    $('.pagination #prev')
+                                            .before(
+                                                    '<p data-page="' +
+                                                    i +
+                                                    '">\
+                                                                  <span>' +
+                                                    i++ +
+                                                    '</span></span>\
+                                                                </p>'
+                                                    )
+                                            .show();
+                                } // end for i
+                            } // end if row count > max rows
+                            $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
+                            $('.pagination p').on('click', function (evt) {
+                                // on click each page
+                                evt.stopImmediatePropagation();
+                                evt.preventDefault();
+                                var pageNum = $(this).attr('data-page'); // get it's number
+
+                                var maxRows = parseInt("10"); // get Max Rows from select option
+
+                                if (pageNum == 'prev') {
+                                    if (lastPage == 1) {
+                                        return;
+                                    }
+                                    pageNum = --lastPage;
+                                }
+                                if (pageNum == 'next') {
+                                    if (lastPage == $('.pagination p').length - 2) {
+                                        return;
+                                    }
+                                    pageNum = ++lastPage;
+                                }
+
+                                lastPage = pageNum;
+                                var trIndex = 0; // reset tr counter
+                                $('.pagination p').removeClass('active'); // remove active class from all li
+                                $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+                                // $(this).addClass('active');					// add active class to the clicked
+                                limitPagging();
+                                $(table + ' tr:gt(0)').each(function () {
+                                    // each tr in table not the header
+                                    trIndex++; // tr index counter
+                                    // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+                                    if (
+                                            trIndex > maxRows * pageNum ||
+                                            trIndex <= maxRows * pageNum - maxRows
+                                            ) {
+                                        $(this).hide();
+                                    } else {
+                                        $(this).show();
+                                    } //else fade in
+                                }); // end of for each tr in table
+                            }); // end of on click pagination list
+                            limitPagging();
+                        })
+                        .val(5)
+                        .change();
+
+                // end of on select change
+
+                // END OF PAGINATION
+            }
+
+            function limitPagging() {
+                // alert($('.pagination li').length)
+
+                if ($('.pagination p').length > 7) {
+                    if ($('.pagination p.active').attr('data-page') <= 3) {
+                        $('.pagination p:gt(5)').hide();
+                        $('.pagination p:lt(5)').show();
+                        $('.pagination [data-page="next"]').show();
+                    }
+                    if ($('.pagination p.active').attr('data-page') > 3) {
+                        $('.pagination p:gt(0)').hide();
+                        $('.pagination [data-page="next"]').show();
+                        for (let i = (parseInt($('.pagination p.active').attr('data-page')) - 2); i <= (parseInt($('.pagination p.active').attr('data-page')) + 2); i++) {
+                            $('.pagination [data-page="' + i + '"]').show();
+
+                        }
+
+                    }
+                }
+            }
+
+            $(function () {
+                // Just to append id number for each row
+                $('table tr:eq(0)').prepend('<th> ID </th>');
+
+                var id = 0;
+
+                $('table tr:gt(0)').each(function () {
+                    id++;
+                    $(this).prepend('<td>' + id + '</td>');
+                });
+            });
+        </script>
+
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

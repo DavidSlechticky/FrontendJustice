@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <script type="text/javascript" th:src="@{/css/scripts.min.js}"></script>
+    <div th:insert="komponenty :: zahlavi"></div>
+    <div th:insert="komponenty :: hlavnimenu"></div>
+
+    <main role="main" class="container">
+
+        <div class="gov-form-control">
+            <input id="bca36608-7606-c779-9201-b9147664c7f9" class="gov-form-control__input gov-js-input" type="text" aria-required="false" aria-disabled="false" placeholder="GOV-12456" />
+            <label required class="gov-form-control__label " for="bca36608-7606-c779-9201-b9147664c7f9">
+                Identifikační číslo
+            </label>
+        </div>
+<br><br><br><br><br><br><br>
+        <div class="gov-form-control gov-form-control--error">
+            <input id="95ff2600-f3c3-2cb0-9015-46a471d40330" class="gov-form-control__input gov-js-input" type="text" aria-required="false" aria-disabled="false" placeholder="GOV-12456" />
+            <label class="gov-form-control__label " for="95ff2600-f3c3-2cb0-9015-46a471d40330">
+                Identifikační číslo*
+            </label>
+            <span class="gov-form-control__message">Toto pole je povinné</span>
+        </div>
+    </main>
+    <div th:insert="komponenty :: paticka"></div>
+
+</html>

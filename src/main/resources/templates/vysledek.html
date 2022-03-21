@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>        
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+            <H3 class="starter-template"><br>4. Výsledek:</H3>
+
+            <div class="card">
+                <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                    <i class="checkmark">✓</i>
+                </div>
+                <h2>PDF soubor byl vygenerován</h2> 
+                <div>Název souboru:</div>
+                <div th:text="${fileName}"></div>
+                <br>  
+                <a href='/downloadPdf' onclick="clickAndDisable(this);" target='_blank'>Stáhnout PDF soubor</a>
+                <!--<a th:href="${fileNameAndPath}">Zobrazit</a>-->
+            </div>   
+            <br>    <br>    
+            <button type="button" style="float: right;" onclick="location.href = '/sluzby'" class="gov-button gov-button--primary">Nová žádost</button>            
+            <button type="button" style="float: left;" onclick="location.href = '/'" class="gov-button">Konec</button>
+
+        </main>
+
+        <div th:insert="komponenty :: paticka"></div>
+        
+        <script>
+            function clickAndDisable(link) {
+                // disable subsequent clicks
+                link.onclick = function (event) {
+                    event.preventDefault();
+                }
+            }
+        </script>
+
+    </body>
+</html>

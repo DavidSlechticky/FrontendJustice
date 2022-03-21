@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+
+        <style>
+            .complete{
+                display:none;
+            }
+            td.more{
+                all: revert;
+                font: roboto;
+                font-size: 14px;
+                padding: 4px 6px;
+                margin-left: 10px;
+                background-color: #2362a2;
+                border: 1px solid #ddd;
+                color: white;
+            }
+
+        </style>
+        <main role="main" class="container">
+            <div class="starter-template">
+                <h1><br>Při běhu aplikace byla zjištěna chyba</h1>
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Datum</td>
+                    <td th:text="${timestamp}"></td>
+                </tr>
+
+                <tr>
+                    <td>Status</td>
+                    <td th:text="${status}"></td>
+                </tr>
+
+                <tr>
+                    <td>Chyba</td>
+                    <td th:text="${error}"></td>
+                </tr>
+
+                <tr>
+                    <td>Cesta</td>
+                    <td th:text="${path}"></td>
+                </tr>
+
+                <tr>
+                    <td class="more">Zobrazit detail?</td>
+                    <td class="complete" th:text="${trace}"></td>
+                </tr>
+
+
+            </table>
+
+        </main>
+
+        <script>
+            $(".more").toggle(function () {
+                $(this).text("Méně..").siblings(".complete").show();
+            }, function () {
+                $(this).text("Více..").siblings(".complete").hide();
+            });
+        </script>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

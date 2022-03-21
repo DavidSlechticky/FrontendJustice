@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+            <h3>Nový důvod žádosti</h3>
+            <div class="vstupy">
+                <form th:action="@{/reasonNew}" th:object="${reasonNew}" method="post">
+                  
+                    <div class="texty-form">Popis:</div><input type="text" name="name" required />
+                    <div class="texty-form">Platnost od:</div><input type="date" name="validfrom" required/>
+                    <div class="texty-form">Platnost do:</div><input type="date" name="validto" required/>
+
+                    <button type="submit" style="float: right;" class="gov-button gov-button--primary">Vytvořit</button>
+                    <button type="button" style="float: left;" onclick="location.href = '/ciselniky'" class="gov-button">Zpět</button>
+                </form>
+            </div>
+
+        </main>
+        <div class="loadingDiv-parent">
+            <div class="loadingDiv">
+                <div class="card border-success">
+                    <div class="card-header">
+                        <h3 class="panel-title">Probíhá zpracování, vyčkejte prosím.</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="sg-loaders__item">
+                            <div class="gov-loader">
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                            </div>
+                        </div>
+                        <span id="panelclose_btn"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(window).on('load', function () {
+                $(".loadingDiv-parent").fadeOut("slow");
+            });
+            $(window).on('beforeunload', function () {
+                $(".loadingDiv-parent").fadeIn(50);
+            });
+        </script>
+
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>

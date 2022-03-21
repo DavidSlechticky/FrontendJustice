@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="cs" class="js-no" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <script type="text/javascript" th:src="@{/css/scripts.min.js}"></script>
+        <div th:insert="komponenty :: zahlavi"></div>
+        <div th:insert="komponenty :: hlavnimenu"></div>
+
+        <main role="main" class="container">
+
+            <H3>1. Zvolte minimálně jednu službu:</H3>
+
+            <form action="#" th:action="@{/vstupy}" th:object="${searchRequestFirst}" method="post">
+
+                <label label class="more round list" for="service1" th:text="${'&nbsp;' + services[0].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[0].friendly}" name="regions" th:field="*{serviceNames[0]}" id="service1" />
+
+                <label label class="more round list" for="service2" th:text="${services[1].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[1].friendly}" name="regions" th:field="*{serviceNames[1]}" id="service2" />
+
+                <label label class="more round list" for="service3" th:text="${services[2].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[2].friendly}" name="regions" th:field="*{serviceNames[2]}" id="service3" />
+
+                <label label class="more round list" for="service4" th:text="${services[3].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[3].friendly}" name="regions" th:field="*{serviceNames[3]}" id="service4" />
+
+                <label label class="more round list" for="service5" th:text="${'&nbsp;' + services[4].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[4].friendly}" name="regions" th:field="*{serviceNames[4]}" id="service5" />
+
+                <label label class="more round list" for="service6" th:text="${services[5].friendly}"></label>
+                <input class="morec roundc listc" type="checkbox" th:value="${services[5].friendly}" name="regions" th:field="*{serviceNames[5]}" id="service6" />
+                <br>
+                <button style="float: right;" type="submit" class="gov-button gov-button--primary">Pokračovat</button>
+                <button type="button" style="float: left;" onclick="location.href = '/'" class="gov-button">Storno</button>                
+            </form>
+
+        </main>
+        <div th:insert="komponenty :: paticka"></div>
+
+    </body>
+</html>
